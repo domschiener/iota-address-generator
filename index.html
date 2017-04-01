@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="IOTA Address Generator Example">
+    <meta name="author" content="Dominik Schiener">
+
+    <title>IOTA Address Generator Example</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/index.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Check out</a>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://iota.org">IOTA Homepage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://learn.iota.org">IOTA Learn</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://dev.iota.org">IOTA DevHub</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN HEADER -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">IOTA Address Generator</h1>
+            <p>This is an educational website for people to learn more about address generation in IOTA and the kind of steps that are involved in going from a seed to an address. Everything is done client-side, so you don't have to worry about your seed leaving your seed at any point in time. This website is best used in conjunction with the IOTA Learn Tutorial with Code Snippets on how to generate addresses in Javascript and Python.</p>
+        </div>
+    </div>
+
+    <!-- SET SEED -->
+    <div class="container stepSection">
+        <div class="row">
+            <div class="col-md-12 stepTitle">
+                <h1><b>1.</b> Your Seed</h1>
+                <hr>
+            </div>
+
+            <div class="col-md-12">
+                <div id="seedInputForm" class="form-group row has-warning">
+                    <label for="inputHorizontalSuccess" class="col-sm-2 col-form-label">Seed</label>
+                    <div class="col-sm-10 test">
+                        <input type="name" class="form-control form-control-warning" id="userSeed">
+                        <div class="form-control-feedback">Enter your seed</div>
+                        <small class="form-text text-muted">Before proceeding you need to enter your seed. Your seed can only contain upper case latin characters and the number 9.</small>
+
+                        <div class="seedSubmitButton">
+                            <button type="button" id="saveSeed" class="btn btn-success">Save Seed</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- READ OPTIONS -->
+    <div class="container stepSection">
+        <div class="row">
+            <div class="col-md-12 stepTitle">
+                <h1><b>2.</b> Read about the Options</h1>
+                <hr>
+            </div>
+
+            <div class="col-md-3">
+                <h2>Key Index</h2>
+                <p>The key index is probably the most important option, as it determines which private key will be used for the address. The key index starts at 0 and can be incremented. Needless to say, a different key index gives you a completely different address</p>
+            </div>
+
+            <div class="col-md-3">
+                <h2>Security</h2>
+                <p>In IOTA there are 3 security levels to choose from. Low tier (81-trit security), Mid tier (162-trit security) and High tier (243-trit security). It basically determines how much effort is put up in generating (i.e. hashing) your address. </p>
+            </div>
+
+            <div class="col-md-3">
+                <h2>Checksum</h2>
+                <p>A checksum is an extra security check which ensures that the generated address is correct and was not altered in any form. A checksum in IOTA is an extra 9-characters (or trytes) which are added to the address</p>
+            </div>
+
+            <div class="col-md-3">
+                <h2>Deterministic</h2>
+                <p>Generating addresses deterministically simplifies the key index management for users. It automatically increments the key index during the generation process in case your address was used in a transaction. <b> In order to use this feature you need to have a connected node</b></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SELECT OPTIONS -->
+    <div class="container stepSection">
+        <div class="row">
+            <div class="col-md-12 stepTitle">
+                <h1><b>3.</b> Select your Options</h1>
+                <hr>
+            </div>
+
+            <div class="col-md-3">
+
+                <h4>Key Index</h4>
+
+                <div class="input-group">
+                    <input id="keyIndex" type="number" class="form-control" value="0" placeholder="Key index">
+                </div>
+
+            </div>
+
+            <!--SECURITY OPTIONS -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    <h4>Select  Security Level</h4>
+                    <select id="security" class="form-control" id="securityLevel">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- CHECKSUM OPTION -->
+            <div class="col-md-3">
+                <div class="form-check">
+                    <label class="custom-control custom-checkbox">
+                        <input id="checksum" type="checkbox" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <h4 class="custom-control-description">Checksum?</h4>
+                    </label>
+                </div>
+            </div>
+
+            <!-- DETERMINISTIC OPTION -->
+            <div class="col-md-3">
+
+
+                <div class="form-check">
+
+                    <label class="custom-control custom-checkbox">
+                        <input id="deterministic" type="checkbox" class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <h4 class="custom-control-description">Deterministic?</h4>
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="container stepSection">
+
+        <div class="row">
+
+            <div class="col-md-12 stepTitle">
+                <h1><b>4.</b> Generate Address</h1>
+                <hr>
+            </div>
+
+            <div class="col-md-12 generateAddress">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button id="generateAddress" class="btn btn-success" type="button">Generate</button>
+                    </span>
+                    <input id="finalAddress" type="text" class="form-control" placeholder="Your address" disabled>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/iota.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
